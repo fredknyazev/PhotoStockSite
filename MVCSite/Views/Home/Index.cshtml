@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MVCSite.Models.Photo>
+@{
+    ViewBag.Title = "Каталог";
+}
+
+<div class="jumbotron" style="background-color:#122d41; color:#ffffff">
+    <h1 style="text-align:center">Библиотека фотографий</h1>
+    <p style="text-align:center" class="lead">Здесь вы найдёте нужные вам фотографии</p>
+</div>
+
+<div class="container">
+    <form method="get">
+        <div>
+            <label>Разделы: </label>
+            @Html.DropDownList("categoryId", ViewBag.Genres as SelectList)
+            <input type="submit" value="Фильтр" />
+        </div>
+    </form>
+</div>
+    <div class="container">
+        <h2>Наши фотографии </h2>
+        <table class="table">
+            <tr>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th width="400px">
+                    @Html.DisplayNameFor(model => model.PhotoSource)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.category.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td >
+                        <img src="@Url.Action("GetImage", "Home", new { Id=item.Id })" style="width:400px; height: auto" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.RouteLink("В корзину", new { controller = "Cart", action = "Add", photoId = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>

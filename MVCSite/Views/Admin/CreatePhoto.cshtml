@@ -1,0 +1,68 @@
+﻿@model MVCSite.Models.Photo
+
+@{
+    ViewBag.Title = "CreatePhoto";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Добавить фотографию</h2>
+
+
+@using (Html.BeginForm("CreatePhoto", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <div class="control-label col-md-2">
+                Категория:
+            </div>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList)
+                @Html.ValidationMessageFor(model => model.CategoryId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhotoSource, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="uploadImage" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Создать" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Назад к каталогу", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

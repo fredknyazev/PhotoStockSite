@@ -1,0 +1,54 @@
+﻿@model IEnumerable<MVCSite.Models.Photo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Каталог книг</h2>
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th width="400px">
+            @Html.DisplayNameFor(model => model.PhotoSource)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <img src="@Url.Action("GetImage", "Home", new { Id=item.Id })" style="max-width:100%;height:auto" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "EditPhoto", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "DeletePhoto", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+<p>
+    @Html.ActionLink("Добавить", "CreatePhoto")
+</p>
